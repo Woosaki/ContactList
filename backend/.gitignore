@@ -1,0 +1,75 @@
+# Visual Studio files
+.vscode/
+*.sln
+*.vs
+/.vscode
+
+# Binaries
+bin/
+obj/
+
+# Packages
+*.nupkg
+*.pfx
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.cache
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio Code files
+.vscode/
+
+# Rider files
+.idea/
+*.sln.iml
+
+# Resharper files
+_ReSharper*/
+*.resharper
+*.ReSharper*/
+*.DotSettings
+
+# Rider
+.idea/
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Logs
+*.log
+
+# Template folder
+_*
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
