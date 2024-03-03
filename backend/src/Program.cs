@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ContactListDbContext>(
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 builder.Services.AddScoped<SubcategoryService>();
+builder.Services.AddScoped<ContactService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

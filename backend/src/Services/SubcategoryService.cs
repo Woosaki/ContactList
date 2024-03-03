@@ -32,6 +32,9 @@ public class SubcategoryService(ContactListDbContext dbContext)
         // Capitalize the first letter and make the rest of the letters lowercase
         var name = char.ToUpper(request.Name[0]) + request.Name[1..].ToLower();
 
+        if (await dbContext.Subcategories.AnyAsync(x => x.Name == name))
+            throw new ApiException($"Subcategory with name {name} already exists", HttpStatusCode.BadRequest);
+
         var subcategory = new Subcategory { Name = name, CategoryId = 3 };
 
         await dbContext.Subcategories.AddAsync(subcategory);
