@@ -1,6 +1,6 @@
 ﻿using ContactListAPI.Dtos;
-using ContactListAPI.Models;
 using ContactListAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactListAPI.Controllers;
@@ -10,6 +10,7 @@ namespace ContactListAPI.Controllers;
 public class ContactController(ContactService contactService) : ControllerBase
 {
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<ContactDto>>> Get()
     {
         var contacts = await contactService.GetAsync();
@@ -18,6 +19,7 @@ public class ContactController(ContactService contactService) : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ContactDto>> GetById(int id)
     {
         var contact = await contactService.GetByIdAsync(id);
