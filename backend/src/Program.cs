@@ -34,8 +34,14 @@ builder.Services.AddAuthentication("Identity")
         options.LogoutPath = "/authentication/logout";
     });
 builder.Services.AddAuthorization();
-
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SubcategoryService>();
@@ -60,6 +66,7 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
