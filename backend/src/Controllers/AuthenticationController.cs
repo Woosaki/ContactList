@@ -10,34 +10,27 @@ namespace ContactListAPI.Controllers;
 [ApiController]
 public class AuthenticationController(AuthService authService) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var principal = authService.Login(request);
-        if (principal == null)
-        {
-            return Unauthorized();
-        }
+        var principal = await authService.Login(request);
 
         await HttpContext.SignInAsync(principal);
 
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     [AllowAnonymous]
-    public IActionResult Register([FromBody] RegisterRequest request)
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        if (authService.Register(request) == false)
-        {
-            return BadRequest();
-        }
+        await authService.Register(request);
 
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync();
