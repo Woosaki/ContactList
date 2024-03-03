@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ContactListAPI.Dtos;
+﻿namespace ContactListAPI.Dtos;
 
 public record LoginRequest
 (
-    [EmailAddress] string Email,
+    string Email,
     string Password
 );

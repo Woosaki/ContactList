@@ -13,11 +13,6 @@ public class AuthService(ContactListDbContext dbContext)
 {
     public async Task<ClaimsPrincipal> Login(LoginRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-        {
-            throw new ApiException("Username and password must be specified.", HttpStatusCode.BadRequest);
-        }
-
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email)
             ?? throw new ApiException($"There is no user with email {request.Email}.", HttpStatusCode.NotFound);
 
@@ -39,18 +34,6 @@ public class AuthService(ContactListDbContext dbContext)
 
     public async Task Register(RegisterRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Email) ||
-            string.IsNullOrWhiteSpace(request.Password) ||
-            string.IsNullOrWhiteSpace(request.ConfirmPassword))
-        {
-            throw new ApiException("Email, password and confirm password must be specified.", HttpStatusCode.BadRequest);
-        }
-
-        if (request.Password != request.ConfirmPassword)
-        {
-            throw new ApiException("Password and confirm password do not match.", HttpStatusCode.BadRequest);
-        }
-
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         if (user != null)
         {

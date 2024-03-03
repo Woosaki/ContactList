@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ContactListAPI.Dtos;
+﻿namespace ContactListAPI.Dtos;
 
 public record RegisterRequest
 (
-    [EmailAddress] string Email,
+    string Email,
     string Password,
     string ConfirmPassword
 );

@@ -1,7 +1,11 @@
+using FluentValidation.AspNetCore;
 using ContactListAPI.Data;
 using ContactListAPI.Middlewares;
 using ContactListAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using ContactListAPI.Validators;
+using ContactListAPI.Dtos;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +41,9 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SubcategoryService>();
 builder.Services.AddScoped<ContactService>();
 
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddTransient<IValidator<AddContactRequest>, AddContactRequestValidator>();
+builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

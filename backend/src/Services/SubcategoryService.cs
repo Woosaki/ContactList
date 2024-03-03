@@ -26,9 +26,6 @@ public class SubcategoryService(ContactListDbContext dbContext)
 
     public async Task<int> AddAsync(AddSubcategoryRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            throw new ApiException("Name is required", HttpStatusCode.BadRequest);
-
         // Capitalize the first letter and make the rest of the letters lowercase
         var name = char.ToUpper(request.Name[0]) + request.Name[1..].ToLower();
 
