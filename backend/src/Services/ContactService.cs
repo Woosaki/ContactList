@@ -38,7 +38,7 @@ public class ContactService(ContactListDbContext dbContext)
             .Include(x => x.Category)
             .Include(x => x.Subcategory)
             .FirstOrDefaultAsync(x => x.Id == id)
-            ?? throw new ApiException($"Contact with id {id} could not be found", HttpStatusCode.NotFound);
+            ?? throw new ApiException($"Contact with id {id} could not be found.", HttpStatusCode.NotFound);
 
         var contactDto = new ContactDto(
             contact.Id,
@@ -59,22 +59,22 @@ public class ContactService(ContactListDbContext dbContext)
     {
         // Category is private
         if (request.CategoryId == 2 && request.SubcategoryId.HasValue)
-            throw new ApiException($"SubcategoryId should not be provided when CategoryId is 2", HttpStatusCode.BadRequest);
+            throw new ApiException($"SubcategoryId should not be provided when CategoryId is 2.", HttpStatusCode.BadRequest);
 
         // Category is business
         if (request.CategoryId == 1 && (!request.SubcategoryId.HasValue || request.SubcategoryId < 1 || request.SubcategoryId > 3))
-            throw new ApiException($"SubcategoryId allowed values for business contact is 1, 2 or 3", HttpStatusCode.BadRequest);
+            throw new ApiException($"SubcategoryId allowed values for business contact is 1, 2 or 3.", HttpStatusCode.BadRequest);
 
         // Category is other
         if (request.CategoryId == 3 && (!request.SubcategoryId.HasValue || request.SubcategoryId <= 3))
-            throw new ApiException($"SubcategoryId for other contacts should be provided and be greater than 3", HttpStatusCode.BadRequest);
+            throw new ApiException($"SubcategoryId for other contacts should be provided and be greater than 3.", HttpStatusCode.BadRequest);
 
         if (request.SubcategoryId.HasValue)
         {
             var subcategoryExists = await dbContext.Subcategories.AnyAsync(x => x.Id == request.SubcategoryId);
             if (!subcategoryExists)
             {
-                throw new ApiException($"Subcategory with id {request.SubcategoryId} could not be found", HttpStatusCode.NotFound);
+                throw new ApiException($"Subcategory with id {request.SubcategoryId} could not be found.", HttpStatusCode.NotFound);
             }
         }
 
@@ -103,7 +103,7 @@ public class ContactService(ContactListDbContext dbContext)
     {
         var contact = await dbContext.Contacts
             .FirstOrDefaultAsync(x => x.Id == id)
-            ?? throw new ApiException($"Contact with id {id} could not be found", HttpStatusCode.NotFound);
+            ?? throw new ApiException($"Contact with id {id} could not be found.", HttpStatusCode.NotFound);
 
         dbContext.Contacts.Remove(contact);
         await dbContext.SaveChangesAsync();
