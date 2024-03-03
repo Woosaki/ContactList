@@ -26,5 +26,9 @@ public class ContactListDbContext(DbContextOptions<ContactListDbContext> options
             new Subcategory { Id = 1, Name = "Boss", CategoryId = 1 },
             new Subcategory { Id = 2, Name = "Client", CategoryId = 1 },
             new Subcategory { Id = 3, Name = "Co-worker", CategoryId = 1 });
+
+        modelBuilder.Entity<Contact>()
+            .Property(b => b.Birthdate)
+            .HasColumnType("date");
     }
 }

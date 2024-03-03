@@ -1,4 +1,6 @@
-﻿namespace ContactListAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace ContactListAPI.Models;
 
 public class Contact
 {
@@ -14,9 +16,11 @@ public class Contact
 
     public int CategoryId { get; set; }
 
+    [JsonIgnore]
     public Category Category { get; set; } = null!;
 
     public int? SubcategoryId { get; set; }
 
+    [JsonIgnore]
     public Subcategory? Subcategory { get; set; }
 }
