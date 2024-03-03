@@ -9,19 +9,50 @@ namespace ContactListAPI.Services;
 
 public class ContactService(ContactListDbContext dbContext)
 {
-    public async Task<IEnumerable<Contact>> GetAsync()
+    public async Task<IEnumerable<ContactDto>> GetAsync()
     {
-        var contacts = await dbContext.Contacts.ToListAsync();
+        var contacts = await dbContext.Contacts
+            .Include(x => x.Category)
+            .Include(x => x.Subcategory)
+            .ToListAsync();
 
-        return contacts;
+        var contactsDto = contacts.Select(x => new ContactDto
+        (
+            x.Id,
+            x.FirstName,
+            x.LastName,
+            x.PhoneNumber,
+            x.Birthdate.Year,
+            x.Birthdate.Day,
+            x.Birthdate.Month,
+            x.Category.Name,
+            x.Subcategory?.Name
+        ));
+
+        return contactsDto;
     }
 
-    public async Task<Contact> GetByIdAsync(int id)
+    public async Task<ContactDto> GetByIdAsync(int id)
     {
-        var contact = await dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == id)
+        var contact = await dbContext.Contacts
+            .Include(x => x.Category)
+            .Include(x => x.Subcategory)
+            .FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new ApiException($"Contact with id {id} could not be found", HttpStatusCode.NotFound);
 
-        return contact;
+        var contactDto = new ContactDto(
+            contact.Id,
+            contact.FirstName,
+            contact.LastName,
+            contact.PhoneNumber,
+            contact.Birthdate.Year,
+            contact.Birthdate.Day,
+            contact.Birthdate.Month,
+            contact.Category.Name,
+            contact.Subcategory?.Name
+        );
+
+        return contactDto;
     }
 
     public async Task<int> AddAsync(AddContactRequest request)
